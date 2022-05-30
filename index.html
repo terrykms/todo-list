@@ -2,39 +2,46 @@
 <html>
     <head>
         <title>A Simple To-Do List</title>
+
+        <!-- meta tags -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+        <!-- custom css -->
         <link rel="stylesheet" href="style.css">
+
     </head>
     <body>
-        <h1>To-Do List</h1>
-        <input type="text" id="myTask" placeholder="Type in your task...">
-        <button onclick="addTask()">Add</button>
+        <div class="container">
+            <h1>To-Do List</h1>
+            <label for="myTask">Task:</label>
+            <input type="text" id="myTask" placeholder="Type in your task..." value="default value (for debugging)"> <br><br>
+    
+            <label for="deadline">Due:</label>
+            <input type="date" id="deadline"> <br><br>
+    
+            <button id="submitTask">Add</button>
+        </div>
 
+        <div class="container">
+            <table id="taskTable">
+                <tr>
+                    <th></th>
+                    <th>Task</th>
+                    <th>Deadline</th>
+                    <th></th>
+                </tr>
+            </table>
+        </div>
 
         
-        <ul id="taskList">
-        </ul>
 
 
-        <script>
 
-            function addTask() {
-                var task = document.getElementById("myTask").value;
+        <!-- javascript -->
+        <!-- this is added at the end of the body tag as it has to be loaded after HTML-->
+        <script src="app.js"></script>
 
-                if (task != "") {
-                    var li = document.createElement("li");  
-                    var textNode = document.createTextNode(task);
-
-                    li.appendChild(textNode);
-
-                    document.getElementById("taskList").appendChild(li);
-                    // save task into local storage
-                    //saveTask(task);
-
-                    document.getElementById("myTask").value = "";
-                }
-
-            
-            }
-        </script>
     </body>
 </html>
