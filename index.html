@@ -7,25 +7,33 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+        <!-- google api fonts -->
+        <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 
         <!-- custom css -->
         <link rel="stylesheet" href="style.css">
 
     </head>
     <body>
-        <div class="container">
+        <div class="container header">
             <h1>To-Do List</h1>
             <label for="myTask">Task:</label>
-            <input type="text" id="myTask" placeholder="Type in your task..." value="default value (for debugging)"> <br><br>
+            <input type="text" id="myTask" placeholder="Type in your task..." value="default value (for debugging)">
     
-            <label for="deadline">Due:</label>
-            <input type="date" id="deadline"> <br><br>
-    
-            <button id="submitTask">Add</button>
+            <button class="submit" id="submitTask">Add</button>
+            <button class="clear" id="clrLocalStorage">Clear Local Storage</button>
         </div>
 
         <div class="container">
-            <table id="taskTable">
+            <ul id="taskList"></ul>
+        </div>
+
+
+
+
+            
+        
+        <!-- <table id="taskTable">
                 <tr>
                     <th></th>
                     <th>Task</th>
@@ -33,7 +41,7 @@
                     <th></th>
                 </tr>
             </table>
-        </div>
+        </div> -->
 
         
 

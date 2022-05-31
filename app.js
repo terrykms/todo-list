@@ -1,89 +1,115 @@
-//define functions
-function createCheckbox(className) {
-    var checkbox = document.createElement("input");
-    checkbox.setAttribute("class", className)
-    checkbox.setAttribute("type", "checkbox")
+let tasks = [];
+window.onload = retrieveFromLocalStorage;
+function addToLocalStorage(tasks) {
+    localStorage.setItem("tasks", JSON.stringify(tasks))
 
-    return checkbox;
 }
 
-function createButton(className, text) {
-    var button = document.createElement("button");
+function retrieveFromLocalStorage() {
+    const reference = localStorage.getItem("tasks");
+    if (reference) {
+        tasks = JSON.parse(reference);
+        renderTasks(tasks);
+    }
+}
+
+
+//for debugging (clear task)
+document.getElementById("clrLocalStorage").addEventListener("click", function() {
+    localStorage.clear();
+})
+
+
+//define functions
+
+function createButton(className) {
+    var button = document.createElement("span");
     button.setAttribute("class", className)
-    button.textContent = text;
+    textNode = document.createTextNode("\u2573");
+    button.appendChild(textNode);
+
+    // create function to remove task when clicked
+    button.addEventListener("click", function() {
+        var data_id = this.parentNode.id
+        this.parentNode.remove();
+
+        // NOT WORKING
+        const reference = localStorage.getItem("tasks");
+        tasks = JSON.parse(reference)
+        tasks.filter(function(item) {
+            key = document.getElementById(data_id);
+            return key != item.id
+        })
+
+    })
 
     return button;
 }
 
 
-function checkTaskStatus(checkbox) {
-    var row = checkbox.parentNode.parentNode
-    console.log(checkbox.checked)
-    if (checkbox.checked) {
-        row.style.color("blue")
-    }
-
-}
-
+// adding task, uses two other functions: saveTaskAsJSON() and renderTask(). 
 function addTask() {
-    var task = document.getElementById("myTask").value;
-    var deadline = document.getElementById("deadline").value;
+    var taskValue = document.getElementById("myTask").value;
 
-    if (task != "") {
-        // creating elements to be inserted 
-        var table = document.getElementById("taskTable");
-        var row = table.insertRow(-1); //inserts row at the last position
+    if (taskValue != "") {
+        // JSON
+        taskObject = saveTaskAsJSON(taskValue, tasks);
+        addToLocalStorage(tasks);
 
-        // create completed & remove buttons
-        var checkboxStatus = createCheckbox("checkbox");
-        var buttonRemove = createButton("remove-button", "Remove");
+        // Add task into HTML 
+        renderTask(taskObject);
 
-        row.insertCell(0).append(checkboxStatus);
-        row.insertCell(1).innerHTML = task;
-        row.insertCell(2).innerHTML = deadline;
-        row.insertCell(3).append(buttonRemove);
-
-        // delete task when "remove" button is clicked
-        var buttonRemoveNodeList = document.querySelectorAll(".remove-button");
-        var checkboxStatusNodeList = document.querySelectorAll(".checkbox");
-
-        var counter = 0;
-        while(counter < buttonRemoveNodeList.length) {
-
-            buttonRemoveNodeList[counter].onclick = function() {
-                this.parentNode.parentNode.remove(); // button -> cell -> row
-            }
-
-            checkboxStatusNodeList[counter].onclick = function() {
-                if (this.checked) {
-                    this.parentNode.parentNode.style.backgroundColor = "green";
-                }
-                else {
-                    this.parentNode.parentNode.style.backgroundColor = "white";
-                }
-
-            }
-            counter++
-        }
-        
-        // mark as completed if task is done
-
-        
-
-
-
-        // save task into local storage
-        //saveTask(task);
-
+        // clear input
         document.getElementById("myTask").value = "";
     }
 }
 
+// used when the page reloads - iterates through every task saved in local storage as JSON
+function renderTasks(tasks) {
+    tasks.forEach(renderTask)
+}
 
+
+function renderTask(taskObject) {
+    taskValue = taskObject.value;
+
+    // creating elements to be inserted
+    var taskList = document.getElementById("taskList");
+    var li = document.createElement("li");  
+    li.setAttribute("class", "item");
+    li.setAttribute("id", taskObject.id);
+    taskTextNode = document.createTextNode(taskValue);
+
+    // create completed & remove buttons
+    var buttonRemove = createButton("remove-button");
+
+    li.appendChild(taskTextNode);
+    li.appendChild(buttonRemove);
+    taskList.appendChild(li);
+}
+
+function saveTaskAsJSON(taskValue, tasks) {
+    // JSON
+    const taskObject = {
+        id: Date.now(),
+        value: taskValue,
+        checked: false
+    }
+
+    tasks.push(taskObject);
+
+    return taskObject
+}
 
 
 
 // Event Handlers
-let addButton = document.getElementById("submitTask");
+var ul = document.querySelector("ul");
+ul.addEventListener("click", function(element) {
+    if (element.target.tagName == "LI" ) {
+        element.target.classList.toggle("checked");
+    }
+})
 
+var addButton = document.getElementById("submitTask");
 addButton.addEventListener("click", addTask);

@@ -1,0 +1,9 @@
+{ 
+    "tasks": 
+    [
+        {
+            "task": "Wash the dishes",
+            "status": "checked"
+        }
+    ] 
+}
