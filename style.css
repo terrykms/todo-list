@@ -2,24 +2,38 @@ body {
     font-family: Montserrat, "Helvetica", "Arial";
 }
 
-.container {
-    margin: 0.5em;
-}
-
 .header {
-    margin-top: 2em;
+    padding: 1em;
     text-align: center;
+    background-color: #f5cac2;
 }
 
-button.submit {
+input {
+    border: none;
+    background-color: #f6e9d7;
+    padding: 0.5em;
+    width: 50%;
+    font-size: 16px;
+    font-family: Montserrat, "Helvetica", "Arial";
+}
+
+button {
     border: none;
     background-color:rgb(196, 196, 196);
     padding: 0.5em;
     transition: 0.2s;
+    font-size: 16px;
+    font-family: Montserrat, "Helvetica", "Arial";
+}
+
+button.clear:hover {
+    cursor: pointer;
+    background-color: #ef5252
 }
 
 button.submit:hover {
-    background-color:rgb(126, 192, 103)
+    cursor: pointer;
+    background-color: #7ec067
 }
 
 ul {
@@ -29,39 +43,60 @@ ul {
 
 ul li {
     cursor: pointer;
-    background-color: rgb(209, 230, 245);
-    padding: 0.5em;
+    position: relative;
+    background-color: #fae5df;
+    padding: 0.5em 0.5em 0.5em 2em;
     text-decoration: none;
-    justify-content: space-between;
     display: flex;
     transition: 0.2s;
 }
 
 ul li:nth-child(even) {
-    background-color: rgb(186, 222, 249)
+    background-color: #f5cac2
 }
 
 ul li:hover {
-    background-color: rgb(186, 222, 249)
+    background-color: #efaeaf
+}
+
+ul li.checked::before {
+    position: absolute;
+    content: "\2713";
+    left: 0;
+    top: 0;
+    padding: 0.5em;
 }
 
 ul li.checked {
-     text-decoration: line-through;
-     background-color:rgb(40, 117, 176);
+    text-decoration: line-through;
+    background-color:#ed7966;
 }
 
 ul li.checked span {
     text-decoration: none;
 }
 
-span.remove-button:hover{
+span.remove-button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 0.5em;
+}
+
+span.remove-button:hover {
     color: rgb(196, 83, 83);
 }
 
-@media only screen and (min-width: 992px){
+@media only screen and (min-width: 992px) {
     .container {
-        margin: 3em;
-        padding-left: 25%;
-        padding-right: 25%;
+        padding-left: 15%;
+        padding-right: 15%;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .container {
+        padding-left: 20%;
+        padding-right: 20%;
     }
 }
