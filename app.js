@@ -87,6 +87,11 @@ function renderTask(taskObject) {
     li.appendChild(taskTextNode);
     li.appendChild(buttonRemove);
     taskList.appendChild(li);
+
+    // check if task is checked
+    if (taskObject.checked) {
+        document.getElementById(taskObject.id).classList.add("checked");
+    }
 }
 
 
@@ -117,13 +122,29 @@ ul.addEventListener("click", function(element) {
     if (element.target.tagName == "LI" ) {
         element.target.classList.toggle("checked");
 
+        taskID = element.target.id
+
         // ADD FUNCTION TO UPDATE "CHECKED" BOOLEAN VALUE IN JSON OBJECT
         tasks = retrieveFromLocalStorage();
+        tasks.forEach(function(item) {
+            if (item.id == taskID) {
+                item.checked = !item.checked
+            }
+        })
+        updateLocalStorage(tasks);
     }
 })
 
 var addButton = document.getElementById("submitTask");
 addButton.addEventListener("click", addTask);
+
+// trigger enter button 
+var input = document.getElementById("myTask");
+input.addEventListener("keypress", e => {
+    if (e.key === "Enter") {
+        addTask()
+    }
+})
 
 // clear task in HTML DOM and localStorage
 document.getElementById("clrLocalStorage").addEventListener("click", function() {
@@ -131,9 +152,7 @@ document.getElementById("clrLocalStorage").addEventListener("click", function() 
     currentTasks = document.querySelectorAll(".item");
     console.log(currentTasks);
 
-    currentTasks.forEach(function(item) {
-        item.remove();
-    })
+    currentTasks.forEach(item => item.remove())
 
     // clear data in localStorage
     localStorage.clear();
