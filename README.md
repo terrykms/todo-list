@@ -11,6 +11,6 @@ Key features:
 <a href="http://minseokim.byethost11.com/todo.html">Demo</a>
 
 <div align="center">
-  <img src="img/screenshot-1.png" width="100"/>
+  <img src="img/screenshot-1.png" width="600"/>
 </div>
 
