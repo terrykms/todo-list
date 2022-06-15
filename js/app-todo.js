@@ -1,11 +1,15 @@
-let tasks = []; // create an empty array of tasks 
-
 window.onload = function() {
     tasks = retrieveFromLocalStorage();
+    // console.log(typeof(tasks))
     renderTasks(tasks);
-}
+} 
+
+let GLOBAL_TASK_LIST = retrieveFromLocalStorage(); // create an empty array of tasks
+
 
 /* ============= LOCAL STORAGE FUNCTIONS ============== */
+
+
 function updateLocalStorage(tasks) {
     localStorage.setItem("tasks", JSON.stringify(tasks))
 }
@@ -13,7 +17,9 @@ function updateLocalStorage(tasks) {
 // returns "tasks" JSON Object 
 function retrieveFromLocalStorage() {
     const reference = localStorage.getItem("tasks");
-    if (reference) {
+    if (reference === null || reference === "undefined") {
+        return [];
+    } else {
         return JSON.parse(reference);
     }
 }
@@ -21,7 +27,7 @@ function retrieveFromLocalStorage() {
 // used when the page reloads - iterates through every task saved in local storage as JSON
 // function renderTask() is defined below
 function renderTasks(tasks) {
-    tasks.forEach(renderTask)
+    (tasks !== undefined) ? tasks.forEach(renderTask) : 0;
 }
 
 // remove an item from localstorage
@@ -43,11 +49,12 @@ function removeTaskFromLocalStorage(taskID) {
 
 function addTask() {
     var taskValue = document.getElementById("myTask").value;
+    // console.log(taskValue);
 
     if (taskValue != "") {
         // JSON
-        taskObject = saveTaskAsJSON(taskValue, tasks);
-        updateLocalStorage(tasks);
+        taskObject = saveTaskAsJSON(taskValue, GLOBAL_TASK_LIST);
+        updateLocalStorage(GLOBAL_TASK_LIST);
 
         // Add task into HTML 
         renderTask(taskObject);
@@ -63,8 +70,11 @@ function saveTaskAsJSON(taskValue, tasks) {
         id: Date.now(),
         value: taskValue,
         checked: false
-    }
+    };
 
+    // console.log(taskObject)
+    // console.log(tasks)
+    if (tasks === undefined) { tasks = [] } 
     tasks.push(taskObject);
 
     return taskObject
@@ -150,8 +160,6 @@ input.addEventListener("keypress", e => {
 document.getElementById("clrLocalStorage").addEventListener("click", function() {
     // clear screen 
     currentTasks = document.querySelectorAll(".item");
-    console.log(currentTasks);
-
     currentTasks.forEach(item => item.remove())
 
     // clear data in localStorage
