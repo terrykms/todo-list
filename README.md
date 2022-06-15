@@ -6,5 +6,9 @@ Key features:
 3. Each task is stored as a JSON object.
 4. Each `<li>` tag contains a unique ID, generated with `Date.now()`.
 
+<<<<<<< HEAD
 ## Demo
 <a href="http://minseokim.byethost11.com/todo.html"></a>
+=======
+![Alt text](https://github.com/terrykms/todo-list/blob/main/screenshot-1.png "interface")
+>>>>>>> d8bae4a173e8ac19dc152ede0f597ef9d6ed15af
